@@ -48,9 +48,10 @@ class TicTacToeEnv(gym.Env):
         if mode == "human":
             for idx, field in enumerate(self._get_state()):
                 if (idx+1) % 3 != 0:
-                    print(f"{field}|", end="")
+                    print("{}|".format(" " if field ==
+                          0 else "X" if field == 1 else "O"), end="")
                 else:
-                    print(field)
+                    print(" " if field == 0 else "X" if field == 1 else "O")
                     if idx < 7:
                         print("-+-+-")
             print("")
