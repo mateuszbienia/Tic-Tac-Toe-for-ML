@@ -62,7 +62,7 @@ class TicTacToe:
 
     def is_valid_move(self, pos: int) -> bool:
         shift = 1 << pos
-        return ((self.board[0] | self.board[1]) & (1 << shift)) == 1 << shift
+        return not (((self.board[0] | self.board[1]) & (shift)) == (shift))
 
     def is_game_over(self) -> bool:
         if self.is_winner(self.player):
@@ -73,7 +73,9 @@ class TicTacToe:
             return True
         return False
 
-    def get_reward(self, player: int) -> float:
+    def get_reward(self, player: int = None) -> float:
+        if player is None:
+            player = self.player
         if self.is_winner(player):
             return self.reward_win
         if self.is_winner(player ^ 1):
@@ -87,6 +89,9 @@ class TicTacToe:
             i for i in range(self.board_height * self.board_width)
             if self.is_valid_move(i)
         ]
+
+    def get_player(self):
+        return self.player
 
     @ property
     def board_height(self) -> int:
